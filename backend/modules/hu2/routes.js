@@ -8,4 +8,19 @@ router.post(
     controller.createFunction
 );
 
+router.get(
+    "/functions",
+    controller.getFunctions
+);
+
+router.put(
+    "/functions/:id",
+    controller.updateFunction
+);
+
+router.delete(
+    "/functions/:id",
+    controller.deleteFunction
+);
+
 module.exports = router;
