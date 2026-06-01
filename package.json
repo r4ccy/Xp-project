@@ -1,10 +1,13 @@
 {
-  "name": "app",
+  "name": "xp-project",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:service": "jest backend/modules/TarjetaCRC/tests/service.test.js",
+    "test:controller": "jest backend/modules/TarjetaCRC/tests/controller.test.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +19,6 @@
     "pg": "^8.21.0"
   },
   "devDependencies": {
-    "jest": "^30.4.2"
+    "jest": "^29.0.0"
   }
 }
