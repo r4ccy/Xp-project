@@ -85,6 +85,12 @@ async function updateFunction(id, content) {
         [id]
     );
 
+    if (currentFunction.rows.length === 0) {
+        throw new Error(
+            "Function not found"
+        );
+    }
+
     const name =
         currentFunction.rows[0].name;
 
