@@ -48,8 +48,74 @@ async function deleteFunction(id) {
     return result.rows[0];
 }
 
+function analyzeComplexity(name, content) {
+    const loops =
+        content.match(/for|while/g);
+
+    if (content.includes("@@@")) {
+        throw new Error(
+            "The complexity of the function could not be determined"
+        );
+    }
+
+    if (loops && loops.length >= 2) {
+        return "O(n²)";
+    }
+
+    if (loops && loops.length === 1) {
+        return "O(n)";
+    }
+
+    if (
+        content.includes(`${name}(`)
+    ) {
+        return "O(n)";
+    }
+    return "O(1)";
+}
+
+async function updateFunction(id, content) {
+
+    const currentFunction = await pool.query(
+        `
+        SELECT *
+        FROM analyzed_function
+        WHERE id = $1
+        `,
+        [id]
+    );
+
+    const name =
+        currentFunction.rows[0].name;
+
+    const complexity =
+        analyzeComplexity(
+            name,
+            content
+        );
+
+    const result = await pool.query(
+        `
+        UPDATE analyzed_function
+        SET content = $1,
+            complexity = $2
+        WHERE id = $3
+        RETURNING *
+        `,
+        [
+            content,
+            complexity,
+            id
+        ]
+    );
+
+    return result.rows[0];
+}
+
 module.exports = {
     registerFunction,
     getFunctions,
-    deleteFunction
+    deleteFunction,
+    analyzeComplexity,
+    updateFunction
 };
