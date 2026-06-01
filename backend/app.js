@@ -1,13 +1,19 @@
-require("dotenv").config();
-
 const express = require("express");
-
 const app = express();
 
 app.use(express.json());
 
-const PORT = 3000;
+const tarjetaRoutes = require("./modules/TarjetaCRC/routes");
+app.use("/api", tarjetaRoutes);
+
+app.get("/", (req, res) => {
+    res.json({ message: "API funcionando correctamente" });
+});
+
+const app = require("./app");
+
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-    console.log(`Servidor ejecutándose en puerto ${PORT}`);
+    console.log("Servidor corriendo en puerto " + PORT);
 });
