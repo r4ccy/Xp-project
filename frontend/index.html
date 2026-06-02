@@ -7,6 +7,7 @@
   
   <link rel="stylesheet" href="styles/global.css">
   <link rel="stylesheet" href="styles/hu1.css">
+  <link rel="stylesheet" href="styles/hu2.css">
 </head>
 <body>
   <h1 class="sr-only">CRC Studio — pantallas de inicio y tarjetas CRC</h1>
@@ -112,13 +113,81 @@
 
     <!-- PANTALLA: ANÁLISIS -->
     <div id="s-anal" class="screen content">
-      <div class="sect-header">
-        <div class="sect-title">Análisis de complejidad</div>
-      </div>
-      <div class="message-card">
-        Módulo en desarrollo — próximamente métricas y gráficas de distribución.
-      </div>
+
+    <div class="hu2-header">
+        <h1>Function Complexity Analyzer</h1>
+        <p>Registra y analiza la complejidad de tus funciones</p>
     </div>
+
+    <!-- REGISTRO -->
+    <section class="hu2-panel">
+
+    <div class="panel-title">
+        <span class="step-circle">1</span>
+        <h3>Registrar función</h3>
+        <small>Completa los campos para analizar</small>
+    </div>
+
+    <div class="form-group">
+      <label>NOMBRE</label>
+      <input
+        type="text"
+        id="functionName"
+        placeholder="Ej. factorial"
+      >
+    </div>
+
+    <div class="form-group">
+      <label>CONTENIDO</label>
+      <textarea
+        id="functionContent"
+        rows="10"
+        placeholder="Pega aquí el código de la función..."
+      ></textarea>
+    </div>
+
+    <button class="btn-analyze">
+      Analizar función
+    </button>
+
+  </section>
+
+  <!-- RESULTADO -->
+  <section class="hu2-result">
+
+    <div class="panel-title">
+      <span class="step-circle">2</span>
+      <h3>Resultado</h3>
+    </div>
+
+    <div class="result-card">
+      <span class="big-o-value" id="currentComplexity">
+        O(1)
+      </span>
+
+      <span class="risk-medium">
+        Complejidad detectada
+      </span>
+    </div>
+
+  </section>
+
+  <!-- LISTA -->
+  <section class="hu2-panel">
+
+    <div class="panel-title">
+      <span class="step-circle">3</span>
+      <h3>Funciones registradas</h3>
+      <small>Lista de funciones analizadas</small>
+    </div>
+
+    <div id="functionsContainer">
+
+    </div>
+
+  </section>
+
+</div>
 
   </div>
 
@@ -126,5 +195,6 @@
   <script src="config/api.js"></script>
   <script src="components/modal.js"></script>
   <script src="modules/hu1.js"></script>
+  <script src="modules/hu2.js"></script>
 </body>
 </html>
