@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #230C33;
+  --surface: #17080F;
+  --card: #2C103A;
+  --card2: #37104C;
+  --coral: #FF5733;
+  --coral-dim: #D9482D;
+  --terra: #B27C66;
+  --lav: #E2CFEA;
+  --lav-dim: #C4A8D8;
+  --border: rgba(226, 207, 234, 0.14);
+  --border2: rgba(178, 124, 102, 0.25);
+  --t1: #F2EFEA;
+  --t2: #C8C0C6;
+  --t3: #9E8DA5;
+  --radius: 14px;
+}
+
+body {
+  font-family: 'Schibsted Grotesk', 'Roboto', sans-serif;
+  background: var(--bg);
+  color: var(--t1);
+  min-height: 100vh;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
