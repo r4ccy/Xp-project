@@ -4,7 +4,9 @@ const router = express.Router();
 const controller = require("./controller");
 
 router.post("/tarjetas", controller.crearTarjeta);
+router.get("/tarjetas", controller.listarTarjetas);
 router.get("/tarjetas/:nombre", controller.obtenerTarjeta);
+router.put("/tarjetas/:nombre", controller.actualizarTarjeta);
 router.delete("/tarjetas/:nombre", controller.eliminarTarjeta);
 
 module.exports = router;
