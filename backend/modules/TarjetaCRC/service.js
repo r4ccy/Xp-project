@@ -1,12 +1,11 @@
 const pool = require("../../config/supabase");
 
-function normalizeNombre(nombre) {
-    return nombre ? nombre.trim().toLowerCase() : null;
+function normalizeNombre(nombre){
+    return nombre ? nombre.trim().toUpperCase() : null;
 }
 
 async function crearTarjeta(nombre, responsabilidades, colaboradores = []) {
-    const nombreNormalizado = normalizeNombre(nombre);
-    if (!nombreNormalizado) {
+    if (!nombre){
         throw new Error("El nombre de la clase es obligatorio");
     }
 
@@ -14,14 +13,13 @@ async function crearTarjeta(nombre, responsabilidades, colaboradores = []) {
         throw new Error("Debe tener al menos una responsabilidad");
     }
 
+    const nombreNormalizado = normalizeNombre(nombre);
     const existe = await pool.query(
-        "SELECT id FROM crc_cards WHERE LOWER(nombre_clase) = $1",
+        "SELECT id FROM crc_cards WHERE nombre_clase = $1",
         [nombreNormalizado]
     );
 
-    if (existe.rows.length > 0) {
-        return false;
-    }
+    if (existe.rows.length > 0) return false;
 
     const result = await pool.query(
         `INSERT INTO crc_cards(nombre_clase)
@@ -32,7 +30,7 @@ async function crearTarjeta(nombre, responsabilidades, colaboradores = []) {
 
     const tarjeta = result.rows[0];
 
-    for (const r of responsabilidades) {
+    for(const r of responsabilidades){
         await pool.query(
             `INSERT INTO crc_responsibilities
              (crc_card_id, descripcion)
@@ -41,7 +39,7 @@ async function crearTarjeta(nombre, responsabilidades, colaboradores = []) {
         );
     }
 
-    for (const colaborador of colaboradores || []) {
+    for(const colaborador of colaboradores || []){
         if (!colaborador || typeof colaborador !== 'string') continue;
         await pool.query(
             `INSERT INTO crc_collaborators
@@ -50,14 +48,13 @@ async function crearTarjeta(nombre, responsabilidades, colaboradores = []) {
             [tarjeta.id, colaborador]
         );
     }
-
-    return await obtenerTarjeta(nombre);
+    return await obtenerTarjeta(nombreNormalizado);
 }
 
-async function obtenerTarjeta(nombre) {
+async function obtenerTarjeta(nombre){
     const nombreNormalizado = normalizeNombre(nombre);
     const cardResult = await pool.query(
-        "SELECT * FROM crc_cards WHERE LOWER(nombre_clase) = $1",
+        "SELECT * FROM crc_cards WHERE nombre_clase = $1",
         [nombreNormalizado]
     );
 
@@ -90,38 +87,25 @@ async function obtenerTarjeta(nombre) {
 }
 
 async function eliminarTarjeta(nombre) {
-    const nombreNormalizado = normalizeNombre(nombre);
-    const tarjeta = await obtenerTarjeta(nombreNormalizado);
+    const tarjeta = await obtenerTarjeta(nombre);
     if (!tarjeta) return false;
 
-    await pool.query(
-        "DELETE FROM crc_responsibilities WHERE crc_card_id = $1",
-        [tarjeta.id]
-    );
+    const id = tarjeta.id;
 
-    await pool.query(
-        "DELETE FROM crc_collaborators WHERE crc_card_id = $1",
-        [tarjeta.id]
-    );
+    await pool.query("DELETE FROM crc_responsibilities WHERE crc_card_id = $1", [id]);
+    await pool.query("DELETE FROM crc_collaborators WHERE crc_card_id = $1", [id]);
+    await pool.query("DELETE FROM crc_cards WHERE id = $1", [id]);
 
-    const result = await pool.query(
-        "DELETE FROM crc_cards WHERE id = $1",
-        [tarjeta.id]
-    );
-
-    return result.rowCount > 0;
+    return true;
 }
 
 async function listarTarjetas() {
     const result = await pool.query(
-        `SELECT MIN(c.nombre_clase) AS nombre,
-                COUNT(DISTINCT r.id) AS responsabilidades,
-                COUNT(DISTINCT col.id) AS colaboradores
+        `SELECT MIN(c.nombre_clase) AS nombre, COUNT(DISTINCT r.id) AS responsabilidades, COUNT(DISTINCT col.id) AS colaboradores
          FROM crc_cards c
          LEFT JOIN crc_responsibilities r ON r.crc_card_id = c.id
          LEFT JOIN crc_collaborators col ON col.crc_card_id = c.id
-         GROUP BY LOWER(c.nombre_clase)
-         ORDER BY MIN(c.nombre_clase)`
+         GROUP BY c.nombre_clase`
     );
 
     return result.rows.map(row => ({
@@ -140,7 +124,7 @@ async function actualizarTarjeta(nombreActual, nombreNuevo, responsabilidades, c
 
     if (nombreNuevoNormalizado && nombreNuevoNormalizado !== nombreActualNormalizado) {
         const existe = await pool.query(
-            "SELECT id FROM crc_cards WHERE LOWER(nombre_clase) = $1 AND id <> $2",
+            "SELECT id FROM crc_cards WHERE nombre_clase = $1 AND id <> $2",
             [nombreNuevoNormalizado, tarjeta.id]
         );
 

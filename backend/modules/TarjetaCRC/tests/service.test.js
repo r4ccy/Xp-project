@@ -7,15 +7,13 @@ beforeEach(async () => {
     );
 });
 
-describe("TarjetaCRC Service (Supabase)", () => {
-
+describe("TarjetaCRC Service (Supabase)",()=>{
     test("Debe crear tarjeta con responsabilidades", async () => {
         const result = await service.crearTarjeta("Colaborador", [
             { descripcion: "Registrar información del colaborador" }
         ]);
-
-        expect(result).not.toBe(false);
-        expect(result.nombre).toBe("Colaborador");
+        expect(result).not.toBeNull()
+        expect(result.nombre).toBe("COLABORADOR");
         expect(result.responsabilidades.length).toBeGreaterThan(0);
     });
 
@@ -26,14 +24,12 @@ describe("TarjetaCRC Service (Supabase)", () => {
     });
 
     test("No debe permitir tarjetas duplicadas", async () => {
-        await service.crearTarjeta("Colaborador", [
+        await service.crearTarjeta("Responsabilidad", [
             { descripcion: "Registrar información" }
         ]);
-
-        const result = await service.crearTarjeta("Colaborador", [
+        const result = await service.crearTarjeta("Responsabilidad", [
             { descripcion: "Otra responsabilidad" }
         ]);
-
         expect(result).toBe(false);
     });
 
@@ -41,11 +37,9 @@ describe("TarjetaCRC Service (Supabase)", () => {
         await service.crearTarjeta("Colaborador", [
             { descripcion: "Registrar información" }
         ]);
-
         const tarjeta = await service.obtenerTarjeta("Colaborador");
-
         expect(tarjeta).not.toBeNull();
-        expect(tarjeta.nombre).toBe("Colaborador");
+        expect(tarjeta.nombre).toBe("COLABORADOR");
     });
 
     test("Debe eliminar una tarjeta", async () => {
@@ -54,9 +48,7 @@ describe("TarjetaCRC Service (Supabase)", () => {
         ]);
 
         const result = await service.eliminarTarjeta("Colaborador");
-
         expect(result).toBe(true);
-
         const deleted = await service.obtenerTarjeta("Colaborador");
         expect(deleted).toBeNull();
     });
@@ -65,14 +57,12 @@ describe("TarjetaCRC Service (Supabase)", () => {
         await service.crearTarjeta("Colaborador", [
             { descripcion: "Inicial" }
         ]);
-
         const result = await service.agregarResponsabilidad(
             "Colaborador",
             "Nueva responsabilidad"
         );
 
         expect(result).toBe(true);
-
         const tarjeta = await service.obtenerTarjeta("Colaborador");
         expect(tarjeta.responsabilidades.length).toBe(2);
     });
@@ -81,7 +71,6 @@ describe("TarjetaCRC Service (Supabase)", () => {
         await service.crearTarjeta("Colaborador", [
             { descripcion: "Registrar información" }
         ]);
-
         const result = await service.agregarResponsabilidad(
             "Colaborador",
             "Registrar información"
@@ -95,12 +84,10 @@ describe("TarjetaCRC Service (Supabase)", () => {
             { descripcion: "R1" },
             { descripcion: "R2" }
         ]);
-
         const result = await service.eliminarResponsabilidad(
             "Colaborador",
             "R1"
         );
-
         expect(result).toBe(true);
 
         const tarjeta = await service.obtenerTarjeta("Colaborador");
@@ -111,14 +98,12 @@ describe("TarjetaCRC Service (Supabase)", () => {
         await service.crearTarjeta("Colaborador", [
             { descripcion: "R1" }
         ]);
-
         const result = await service.agregarColaborador(
             "Colaborador",
             "Docente"
         );
 
         expect(result).toBe(true);
-
         const tarjeta = await service.obtenerTarjeta("Colaborador");
         expect(tarjeta.colaboradores.length).toBe(1);
     });
@@ -127,9 +112,7 @@ describe("TarjetaCRC Service (Supabase)", () => {
         await service.crearTarjeta("Colaborador", [
             { descripcion: "R1" }
         ]);
-
         await service.agregarColaborador("Colaborador", "Docente");
-
         const result = await service.agregarColaborador(
             "Colaborador",
             "Docente"
@@ -144,12 +127,10 @@ describe("TarjetaCRC Service (Supabase)", () => {
         ]);
 
         await service.agregarColaborador("Colaborador", "Docente");
-
         const result = await service.eliminarColaborador(
             "Colaborador",
             "Docente"
         );
-
         expect(result).toBe(true);
     });
 
