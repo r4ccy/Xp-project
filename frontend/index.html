@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRC Studio — XP · TDD</title>
+  
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/hu1.css">
+</head>
+<body>
+  <h1 class="sr-only">CRC Studio — pantallas de inicio y tarjetas CRC</h1>
+
+  <div class="app-container">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+            <rect x="2" y="2" width="7" height="7" rx="1.5" fill="white"/>
+            <rect x="11" y="2" width="7" height="7" rx="1.5" fill="white" opacity=".5"/>
+            <rect x="2" y="11" width="7" height="7" rx="1.5" fill="white" opacity=".5"/>
+            <rect x="11" y="11" width="7" height="7" rx="1.5" fill="white" opacity=".25"/>
+          </svg>
+        </div>
+        <span class="brand-name">CRC Studio</span>
+        <span class="brand-tag">XP · TDD</span>
+      </div>
+      <div class="nav-pills">
+        <button class="npill on">Inicio</button>
+        <button class="npill">Tarjetas CRC</button>
+        <button class="npill">Análisis</button>
+      </div>
+    </div>
+
+    <!-- PANTALLA: INICIO -->
+    <div id="s-inicio" class="screen active content">
+      <div class="welcome-head">
+        <h1>Sistema de apoyo XP</h1>
+        <p>Gestiona tarjetas CRC y analiza la complejidad de tu sistema para apoyar el desarrollo ágil.</p>
+        <small>Selecciona un módulo para comenzar</small>
+      </div>
+      <div class="modules-grid">
+        <div class="mcard m-crc" onclick="crcStudio.show('crc')">
+          <div class="mcard-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B27C66" stroke-width="1.8">
+              <rect x="2" y="5" width="20" height="14" rx="2"/>
+              <line x1="2" y1="10" x2="22" y2="10"/>
+              <line x1="7" y1="15" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <h3>Tarjetas CRC</h3>
+          <p>Crear, editar y consultar tarjetas de Clase · Responsabilidad · Colaboración.</p>
+          <button class="mcard-link" onclick="crcStudio.show('crc')">
+            Ir al módulo
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+        <div class="mcard m-anal" onclick="crcStudio.show('anal')">
+          <div class="mcard-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF5733" stroke-width="1.8">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+          </div>
+          <h3>Análisis de complejidad</h3>
+          <p>Métricas y distribución de complejidad para tomar decisiones en el sprint.</p>
+          <button class="mcard-link" onclick="crcStudio.show('anal')">
+            Ver análisis
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANTALLA: TARJETAS CRC -->
+    <div id="s-crc" class="screen content">
+      <div class="sect-header">
+        <div>
+          <div class="sect-title">Tarjetas CRC</div>
+          <div class="sect-sub">Clases registradas en el sistema</div>
+        </div>
+        <button class="btn-add">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Nueva tarjeta
+        </button>
+      </div>
+
+      <div class="search-row">
+        <div class="searchbox">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A6AA8" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" placeholder="Buscar tarjeta por nombre…" id="srch"/>
+        </div>
+      </div>
+
+      <div class="cards-grid" id="cards-container"></div>
+
+      <!-- Área para modales -->
+      <div id="modal-area"></div>
+    </div>
+
+    <!-- PANTALLA: ANÁLISIS -->
+    <div id="s-anal" class="screen content">
+      <div class="sect-header">
+        <div class="sect-title">Análisis de complejidad</div>
+      </div>
+      <div class="message-card">
+        Módulo en desarrollo — próximamente métricas y gráficas de distribución.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts - Orden importante: API, modal, luego hu1 -->
+  <script src="config/api.js"></script>
+  <script src="components/modal.js"></script>
+  <script src="modules/hu1.js"></script>
+</body>
+</html>
