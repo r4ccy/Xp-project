@@ -1,10 +1,14 @@
 const service = require("./service");
 
+function isBadRequestError(error) {
+    return /Ya existe|Debe tener|otra tarjeta con ese nombre|Ya existe otra tarjeta|duplicad|no puede/i.test(error.message);
+}
+
 async function crearTarjeta(req, res) {
     try {
-        const { nombre, responsabilidades } = req.body;
+        const { nombre, responsabilidades, colaboradores } = req.body;
 
-        const resultado = await service.crearTarjeta(nombre, responsabilidades);
+        const resultado = await service.crearTarjeta(nombre, responsabilidades, colaboradores);
 
         if (!resultado) {
             return res.status(400).json({
@@ -15,7 +19,8 @@ async function crearTarjeta(req, res) {
         return res.status(201).json(resultado);
 
     } catch (error) {
-        return res.status(500).json({
+        const status = isBadRequestError(error) ? 400 : 500;
+        return res.status(status).json({
             message: error.message
         });
     }
@@ -38,6 +43,39 @@ async function obtenerTarjeta(req, res) {
 
     } catch (error) {
         return res.status(500).json({
+            message: error.message
+        });
+    }
+}
+
+async function listarTarjetas(req, res) {
+    try {
+        const tarjetas = await service.listarTarjetas();
+        return res.status(200).json(tarjetas);
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message
+        });
+    }
+}
+
+async function actualizarTarjeta(req, res) {
+    try {
+        const { nombre } = req.params;
+        const { nombre: nombreNuevo, responsabilidades, colaboradores } = req.body;
+
+        const resultado = await service.actualizarTarjeta(nombre, nombreNuevo, responsabilidades, colaboradores);
+
+        if (!resultado) {
+            return res.status(404).json({
+                message: "Tarjeta no encontrada"
+            });
+        }
+
+        return res.status(200).json(resultado);
+    } catch (error) {
+        const status = isBadRequestError(error) ? 400 : 500;
+        return res.status(status).json({
             message: error.message
         });
     }
@@ -70,5 +108,7 @@ async function eliminarTarjeta(req, res) {
 module.exports = {
     crearTarjeta,
     obtenerTarjeta,
+    listarTarjetas,
+    actualizarTarjeta,
     eliminarTarjeta
 };
