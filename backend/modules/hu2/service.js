@@ -1,6 +1,7 @@
 const pool = require("../../config/supabase");
 
 async function registerFunction(name, content) {
+
     const existingFunction = await pool.query(
         `
         SELECT *
@@ -14,14 +15,29 @@ async function registerFunction(name, content) {
         throw new Error("Function name already exists");
     }
 
+    const complexity =
+        analyzeComplexity(
+            name,
+            content
+        );
+
     const result = await pool.query(
-      `
-        INSERT INTO analyzed_function(name, content)
-        VALUES($1, $2)
+        `
+        INSERT INTO analyzed_function(
+            name,
+            content,
+            complexity
+        )
+        VALUES($1, $2, $3)
         RETURNING *
         `,
-        [name, content]
+        [
+            name,
+            content,
+            complexity
+        ]
     );
+
     return result.rows[0];
 }
 
@@ -66,11 +82,11 @@ function analyzeComplexity(name, content) {
         return "O(n)";
     }
 
-    if (
-        content.includes(`${name}(`)
-    ) {
-        return "O(n)";
-    }
+    //if (
+    //    content.includes(`${name}(`)
+    //) {
+    //    return "O(n)";
+    //}
     return "O(1)";
 }
 

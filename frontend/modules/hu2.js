@@ -28,8 +28,12 @@ class ComplexityAnalyzer {
 
     try {
 
+      const response = await fetch(
+        "http://localhost:3000/api/functions"
+      );
+
       this.functions =
-        await FunctionService.getAll();
+        await response.json();
 
       this.renderFunctions();
 
@@ -43,15 +47,15 @@ class ComplexityAnalyzer {
 
     const name =
       document
-      .getElementById("functionName")
-      .value
-      .trim();
+        .getElementById("functionName")
+        .value
+        .trim();
 
     const content =
       document
-      .getElementById("functionContent")
-      .value
-      .trim();
+        .getElementById("functionContent")
+        .value
+        .trim();
 
     if (!name || !content) {
       alert("Completa todos los campos");
@@ -60,10 +64,36 @@ class ComplexityAnalyzer {
 
     try {
 
-      await FunctionService.create({
-        name,
-        content
-      });
+      const response = await fetch(
+        "http://localhost:3000/api/functions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name,
+            content
+          })
+        }
+      );
+
+      const data =
+        await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.error ||
+          "Error al registrar función"
+        );
+      }
+
+      document.getElementById(
+      "currentComplexity"
+        ).textContent =
+        data.complexity || "Pendiente";
+
+        await this.loadFunctions();
 
       await this.loadFunctions();
 
@@ -125,7 +155,18 @@ class ComplexityAnalyzer {
 
     try {
 
-      await FunctionService.delete(id);
+      const response = await fetch(
+        `http://localhost:3000/api/functions/${id}`,
+        {
+          method: "DELETE"
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          "Error al eliminar función"
+        );
+      }
 
       await this.loadFunctions();
 
