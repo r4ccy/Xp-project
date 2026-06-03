@@ -1,22 +1,4 @@
-/* --------------------------------------------------
-   MAPEO DE VARIABLES DEL COMPONENTE A LA PALETA GLOBAL
-   (asume que :root global ya contiene --coral, --bg, etc.)
--------------------------------------------------- */
-:root {
-  --primary: var(--coral);
-  --primary-hover: var(--coral-dim);
-  --text: var(--t1);
-  --text-soft: var(--t2);
-  --text-muted: var(--t3);
-  --accent: var(--terra);
-  --card-soft: var(--surface);
-  --shadow: 0 8px 24px rgba(0,0,0,0.3);
-  --shadow-lg: 0 20px 48px rgba(0,0,0,0.45);
-}
 
-/* --------------------------------------------------
-   ESTRUCTURA EXISTENTE SIN MODIFICACIONES DE REGLAS
--------------------------------------------------- */
 .app-container {
   background: var(--bg);
   min-height: 100vh;
@@ -27,7 +9,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 24px 48px;
-  background: rgba(20, 5, 32, 0.85); /* surface con transparencia */
+  background: var(--sandia);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
   position: sticky;
@@ -57,6 +39,10 @@
   font-weight: 800;
   color: var(--text);
   letter-spacing: -0.03em;
+}
+
+.subtitle{
+  color:var(--t2)
 }
 
 .brand-tag {
@@ -91,7 +77,7 @@
 .npill.on {
   background: var(--primary);
   color: white;
-  box-shadow: 0 10px 24px rgba(255,87,51,0.18);
+  box-shadow: 0 10px 24px rgba(218, 68, 35, 0.18);
 }
 
 .screen {
@@ -114,12 +100,13 @@
   padding: 80px 0 56px;
   margin: 0 auto;
   max-width: 900px;
+  color: var(--t2);
 }
 
 .welcome-head h1 {
   font-size: 60px;
   font-weight: 800;
-  color: var(--text);
+  color: var(--lav);
   letter-spacing: -0.05em;
   line-height: 1.05;
   margin-bottom: 18px;
@@ -148,6 +135,7 @@
   gap: 28px;
   max-width: 980px;
   margin: 0 auto;
+  color: var(--t2);
 }
 
 .mcard {
@@ -273,7 +261,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: var(--primary);
+  background:var(--sandia);
   color: white;
   border: none;
   border-radius: 18px;
@@ -288,7 +276,7 @@
 .btn-add:hover,
 .btn-save:hover,
 .btn-primary:hover {
-  background: var(--primary-hover);
+  background: var(--sandia);
   transform: translateY(-2px);
 }
 
@@ -377,12 +365,12 @@
 }
 
 .btn-ver {
-  background: var(--card2);
+  background: var(--sandia);
   color: var(--accent);
 }
 
 .btn-edit {
-  background: rgba(255,87,51,0.12);
+  background: var(--sandia);
   color: var(--primary);
 }
 
@@ -503,7 +491,7 @@
   gap: 8px;
   padding: 10px 16px;
   border-radius: 999px;
-  background: var(--card2);
+  background: var(--sandia);
   color: var(--accent);
   font-size: 14px;
   font-weight: 700;
@@ -650,8 +638,7 @@
   gap: 8px;
   padding: 12px 16px;
   border-radius: 999px;
-  background: var(--card2);
-  color: var(--accent);
+  background: var(--sandia);
   font-size: 14px;
   font-weight: 700;
 }

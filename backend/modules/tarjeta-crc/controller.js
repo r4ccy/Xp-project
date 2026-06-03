@@ -7,15 +7,12 @@ function isBadRequestError(error) {
 async function crearTarjeta(req, res) {
     try {
         const { nombre, responsabilidades, colaboradores } = req.body;
-
         const resultado = await service.crearTarjeta(nombre, responsabilidades, colaboradores);
-
         if (!resultado) {
             return res.status(400).json({
                 message: "La tarjeta ya existe"
             });
         }
-
         return res.status(201).json(resultado);
 
     } catch (error) {
@@ -30,9 +27,7 @@ async function crearTarjeta(req, res) {
 async function obtenerTarjeta(req, res) {
     try {
         const { nombre } = req.params;
-
         const tarjeta = await service.obtenerTarjeta(nombre);
-
         if (!tarjeta) {
             return res.status(404).json({
                 message: "Tarjeta no encontrada"
