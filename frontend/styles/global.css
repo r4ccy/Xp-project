@@ -12,18 +12,19 @@
   --surface: #0D1120;
   --card: #141828;
   --card2: #1C2235;
-  --terra: #E8923A;
-  --coral: #E84B2A;
+  --terra: #f69a4a;
+  --coral: #f69a4a;
   --coral-dim: #C23820;
-  --sandia : rgba(107, 45, 35, 0.85); 
-  --lav: #E8923A;
+  --sandia : rgba(186, 77, 47, 0.85); 
+  --lav: #f69a4a;
   --lav-dim: #C4762A;
-  --border: rgba(232, 146, 58, 0.18);
+  --border: rgba(236, 194, 152, 0.18);
   --border2: rgba(232, 146, 58, 0.35);
   --t1: #F0F2F8;
-  --t2: #E8923A;
+  --t2: #f69a4a;
   --t3: #6A7898;
   --radius: 14px;
+  --btnnav : rgba(222, 98, 63, 0.85); 
   
 }
 body {
