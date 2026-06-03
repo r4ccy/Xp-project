@@ -2,19 +2,17 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 
-const hu2Routes =
-    require("./modules/hu2/routes");
-
-const tarjetaRoutes =
-    require("./modules/TarjetaCRC/routes");
+const complejidadRoutes   = require("./modules/complejidad/routes");
+const tarjetaRoutes = require("./modules/tarjeta-crc/routes");
+const analizadorRoutes = require('./modules/analizador-crc/routes');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-app.use("/api", hu2Routes);
+app.use("/api", complejidadRoutes);
 app.use("/api", tarjetaRoutes);
+app.use("/api", analizadorRoutes);
 
 app.use(express.static(path.join(__dirname, "../frontend")));
 
