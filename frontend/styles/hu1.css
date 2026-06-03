@@ -638,7 +638,7 @@
   gap: 8px;
   padding: 12px 16px;
   border-radius: 999px;
-  background: var(--sandia)
+  background: var(--sandia);
   font-size: 14px;
   font-weight: 700;
 }
