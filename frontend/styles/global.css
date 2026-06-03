@@ -8,22 +8,24 @@
 
 :root {
   --black: #000000;
-  --bg: #000000;                
-  --surface: #140520;           
-  --card: #230C33;              
-  --card2: #2e1040;             
-  --coral: #FF5733;
-  --coral-dim: #cc4422;         
-  --lav: #E2CFEA;
-  --lav-dim: #b893c4;           
-  --border: rgba(226, 207, 234, 0.16);
-  --border2: rgba(178, 124, 102, 0.28);
-  --t1: #F5F0F7;                /* texto principal casi blanco, tinte lavanda */
-  --t2: #E2CFEA;                /* texto secundario lavanda */
-  --t3: #B27C66;                /* texto terciario terracota */
+  --bg: #060810;
+  --surface: #0D1120;
+  --card: #141828;
+  --card2: #1C2235;
+  --terra: #E8923A;
+  --coral: #E84B2A;
+  --coral-dim: #C23820;
+  --sandia : rgba(107, 45, 35, 0.85); 
+  --lav: #E8923A;
+  --lav-dim: #C4762A;
+  --border: rgba(232, 146, 58, 0.18);
+  --border2: rgba(232, 146, 58, 0.35);
+  --t1: #F0F2F8;
+  --t2: #E8923A;
+  --t3: #6A7898;
   --radius: 14px;
+  
 }
-
 body {
   font-family: 'Schibsted Grotesk', 'Roboto', sans-serif;
   background: var(--bg);
@@ -41,4 +43,44 @@ body {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+.confirm-dialog {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 40px;
+  width: min(100%, 460px);
+  text-align: center;
+}
+
+.confirm-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  background: rgba(255,87,51,0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  color: var(--coral);
+}
+
+.confirm-dialog h3 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--t1);
+  margin-bottom: 12px;
+}
+
+.confirm-dialog p {
+  font-size: 15px;
+  color: var(--t2);
+  line-height: 1.7;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
 }
