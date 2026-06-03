@@ -6,8 +6,11 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:service": "jest backend/modules/TarjetaCRC/tests/service.test.js",
-    "test:controller": "jest backend/modules/TarjetaCRC/tests/controller.test.js"
+    "test:service": "jest backend/modules/tarjeta-crc/tests/service.test.js",
+    "test:controller": "jest backend/modules/tarjeta-crc/tests/controller.test.js",
+    "test:acceptance": "jest backend/modules/complejidad/tests/acceptance.test.js",
+    "test:serviceh2": "jest backend/modules/complejidad/tests/service.test.js"
+  
   },
   "keywords": [],
   "author": "",

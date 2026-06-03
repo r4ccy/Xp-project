@@ -14,12 +14,10 @@ class CRCStudio {
       const screenIds = ['inicio', 'crc', 'anal'];
       pill.addEventListener('click', () => this.show(screenIds[index]));
     });
-
     const searchInput = document.getElementById('srch');
     if (searchInput) {
       searchInput.addEventListener('input', () => this.filterCards());
     }
-
     const btnAdd = document.querySelector('.btn-add');
     if (btnAdd) {
       btnAdd.addEventListener('click', () => this.openNewCardModal());
@@ -133,20 +131,13 @@ class CRCStudio {
     });
   }
 
-  /**
-   * Cambia la pantalla visible
-   */
   show(screenId) {
-    // Ocultar todas las pantallas
     document.querySelectorAll('.screen').forEach(s => {
       s.style.display = 'none';
       s.classList.remove('active');
     });
 
-    // Actualizar pills
     document.querySelectorAll('.npill').forEach(p => p.classList.remove('on'));
-
-    // Mostrar pantalla seleccionada
     const screenMap = {
       'inicio': 's-inicio',
       'crc': 's-crc',
@@ -158,13 +149,11 @@ class CRCStudio {
       screenElement.style.display = 'block';
       screenElement.classList.add('active');
       
-      // Si es la pantalla de CRC, cargar tarjetas
       if (screenId === 'crc') {
         this.loadCards();
       }
     }
 
-    // Marcar pill como activa
     const pillIndex = ['inicio', 'crc', 'anal'].indexOf(screenId);
     if (pillIndex !== -1) {
       document.querySelectorAll('.npill')[pillIndex].classList.add('on');
@@ -173,9 +162,6 @@ class CRCStudio {
     this.currentScreen = screenId;
   }
 
-  /**
-   * Filtra tarjetas por búsqueda
-   */
   filterCards() {
     const query = document.getElementById('srch').value.toLowerCase();
     const cards = document.querySelectorAll('.crc-card');
@@ -186,18 +172,12 @@ class CRCStudio {
     });
   }
 
-  /**
-   * Abre el modal para crear nueva tarjeta
-   */
   openNewCardModal() {
     if (typeof crcModal !== 'undefined') {
       crcModal.openModal();
     }
   }
 
-  /**
-   * Maneja la acción Ver de una tarjeta
-   */
   async viewCard(cardName) {
     try {
       const tarjeta = await TarjetaCRCService.obtener(cardName);
@@ -210,9 +190,6 @@ class CRCStudio {
     }
   }
 
-  /**
-   * Maneja la acción Editar de una tarjeta
-   */
   async editCard(cardName) {
     try {
       const tarjeta = await TarjetaCRCService.obtener(cardName);
@@ -226,10 +203,8 @@ class CRCStudio {
   }
 }
 
-// Instancia global
 const crcStudio = new CRCStudio();
 
-// Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
   crcStudio.init();
 });
