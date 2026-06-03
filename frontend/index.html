@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CRC Studio — XP · TDD</title>
+  <title>XP</title>
   
   <link rel="stylesheet" href="styles/global.css">
   <link rel="stylesheet" href="styles/hu1.css">
@@ -24,8 +24,8 @@
             <rect x="11" y="11" width="7" height="7" rx="1.5" fill="white" opacity=".25"/>
           </svg>
         </div>
-        <span class="brand-name">CRC Studio</span>
-        <span class="brand-tag">XP · TDD</span>
+        <span class="brand-name">Extreme programming</span>
+    
       </div>
       <div class="nav-pills">
         <button class="npill on">Inicio</button>
@@ -49,6 +49,7 @@
               <line x1="7" y1="15" x2="12" y2="15"/>
             </svg>
           </div>
+
           <h3>Tarjetas CRC</h3>
           <p>Crear, editar y consultar tarjetas de Clase · Responsabilidad · Colaboración.</p>
           <button class="mcard-link" onclick="crcStudio.show('crc')">
@@ -80,7 +81,7 @@
 
     <div id="s-crc" class="screen content">
       <div class="sect-header">
-        <div>
+        <div class="subtitle">
           <div class="sect-title">Tarjetas CRC</div>
           <div class="sect-sub">Clases registradas en el sistema</div>
         </div>
@@ -191,7 +192,7 @@
 
   <script src="config/api.js"></script>
   <script src="components/modal.js"></script>
-  <script src="modules/hu1.js"></script>
-  <script src="modules/hu2.js"></script>
+  <script src="modules/tarjeta-crc.js"></script>
+  <script src="modules/complejidad.js"></script>
 </body>
 </html>
