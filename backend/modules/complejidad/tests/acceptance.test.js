@@ -21,6 +21,36 @@ describe("Gestión de funciones analizadas", () => {
     );
 
     test(
+        "no debe registrar una función sin nombre",
+        async () => {
+
+            await expect(
+                service.registerFunction(
+                    "",
+                    "console.log('hola');"
+                )
+            ).rejects.toThrow(
+                "Function name is required"
+            );
+        }
+    );
+
+    test(
+        "no debe registrar una función sin contenido",
+        async () => {
+
+            await expect(
+                service.registerFunction(
+                    "sinContenido",
+                    ""
+                )
+            ).rejects.toThrow(
+                "Function content is required"
+            );
+        }
+    );
+
+    test(
         "no debe registrar funciones con nombre duplicado",
         async () => {
 
@@ -107,6 +137,27 @@ describe("Gestión de funciones analizadas", () => {
             expect(
                 updated.complexity
             ).toBe("O(n)");
+        }
+    );
+
+    test(
+        "no debe actualizar una función con contenido vacío",
+        async () => {
+
+            const created =
+                await service.registerFunction(
+                    `emptyUpdate_${Date.now()}`,
+                    "console.log('hola');"
+                );
+
+            await expect(
+                service.updateFunction(
+                    created.id,
+                    ""
+                )
+            ).rejects.toThrow(
+                "Function content is required"
+            );
         }
     );
 

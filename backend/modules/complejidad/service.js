@@ -2,6 +2,18 @@ const pool = require("../../config/supabase");
 
 async function registerFunction(name, content) {
 
+    if (!name || name.trim().length === 0) {
+        throw new Error(
+            "Function name is required"
+        );
+    }
+
+    if (!content || content.trim().length === 0) {
+        throw new Error(
+            "Function content is required"
+        );
+    }
+
     const existingFunction = await pool.query(
         `
         SELECT *
@@ -82,15 +94,22 @@ function analyzeComplexity(name, content) {
         return "O(n)";
     }
 
-    //if (
-    //    content.includes(`${name}(`)
-    //) {
-    //    return "O(n)";
-    //}
+    // if (
+    //     content.includes(`${name}(`)
+    // ) {
+    //     return "O(n)";
+    // }
+
     return "O(1)";
 }
 
 async function updateFunction(id, content) {
+
+    if (!content || content.trim().length === 0) {
+        throw new Error(
+            "Function content is required"
+        );
+    }
 
     const currentFunction = await pool.query(
         `
